@@ -1,0 +1,93 @@
+Props to pass data to components.
+Props are read only (immutable).
+What happens if i need to keep track of data that can change
+This is where state comes in
+
+Parent component needs 3 things:
+
+1. Initial state
+2. call this.setState to change state
+3. a way to display or use that state
+
+
+// Functional form of setState
+this.setState((state, props) => {
+  return {
+    actionCount: this.state.actionCount + 1
+  };
+});
+
+// Callback functional setState
+const newValue = this.state.actionCount + 1;
+this.setState({ actionCount: newValue }, function() {
+  console.log(this.state.actionCount);
+});
+
+this.setState({
+ actionCount: this.state.actionCount + 1
+});
+
+
+
+embedded objects in state could erase data
+{
+  score: 7,
+  user: {
+    name: "guy",
+    age: 41
+  },
+  products: [ /*...*/]
+}
+
+if you do:
+this.setState({user: {age: 4}}) Then you get this:
+
+{
+  score: 7,
+  user: {
+    age: 4 <===== name is erased from earlier class. don't do it
+  },
+  products: [ /*...*/]
+}
+
+
+Events
+html:
+onclick, onsubmit, ondblclick
+React:
+onClick, onSubmit, onDoubleClick
+go to react docs for full list of events
+
+not native browser events,
+they are synthetic events managed by React
+
+The event object that is passed to a handler function
+is only valid at the moment
+
+What to put in state?
+general rule:
+data that is stored in state, should be referenced inside
+render somewhere
+mainly for storing UI
+state => UI
+
+if modifying a piece of data does not visually change Component
+data should not go into state
+
+user-entered input(values)
+current or selected item(current tab)
+data from the server(list of products)
+open/closed state(modal open/closed, sidebar expanded/hidden)
+
+stateful data, like handles to timers, should be stored on
+the component instance itself. class components you have this object
+available. use that for above types
+
+
+keep state at highest level component possible
+
+two different types of components
+container and presentational
+
+container contains information
+presentational does what it's told
